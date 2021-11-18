@@ -1,0 +1,24 @@
+{% extends 'task/base.html' %}
+{% block content %}
+
+<div class="center-column">
+		<h3>New Taks</h3>
+		<form method="POST" >
+            {% csrf_token %}
+{#            {{ form }}#}
+
+            {{ form.name }}
+            {{ form.name.errors }}
+            {{ form.name.label }}
+            {{ form.description }}
+            {{ form.status }}
+
+
+
+
+		<input class="btn btn-info" type="submit" name="Create Task">
+	</form>
+</div>
+
+{% endblock content %}
+

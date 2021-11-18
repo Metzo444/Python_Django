@@ -1,0 +1,33 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+
+<div class="center-column">
+
+
+	<div class="todo-list">
+	<h3>Tasks</h3>
+
+{#        {{ task_list }}#}
+<!-- here is set up the task -->
+
+        {% for task in task_list %}
+            <div class="item-row">
+
+                <a class="btn btn-sm btn-info" href="{% url 'task-update' task.id %}">Update</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'task-delete' task.id %}">Delete</a>
+                <!-- this a tag is for task special view -->
+                <a href="{% url 'task-view' task.id %}">{{ task.name }}
+                </a>
+
+            </div>
+        {% endfor %}
+
+		<div class="item-row">
+				<!-- this is for create -->
+				<a href="{% url 'task-create' %}"><button class="btn btn-success" type="button" name="Create Task">Create</button></a>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
