@@ -1,0 +1,16 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="new_project.project_1.views.project_1" />
+          <option value="new_project.project_1.urls" />
+          <option value="new_project.project_1.models.Film.objects" />
+          <option value="new_project.project_1.models.Film.DoesNotExist" />
+          <option value="new_project.project_1.views.films.query" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

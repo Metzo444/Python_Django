@@ -1,17 +1,22 @@
 from django.shortcuts import HttpResponse
 from project_1.models import Film
 
-#
-film_s = Film.objects.get(id=1)
-film_s.delete()
+
+def film_delete(request, film_id):
+    try:
+        film = Film.objects.get(id=film_id)
+    except Film.DoesNotExist:
+        return HttpResponse('Failed')
+    film.delete(id=film_id)
+    return HttpResponse('Sucessful')
 
 
 def home(request):
     film = Film.objects.all()
     return HttpResponse('Hi Python')
 
-#
-film_2 = Film(name='Harry Potter', rate=6, is_published=True, status=2)
+
+film_2 = Film(name='Forrest Gump', rate=5, is_published=True, status=1)
 film_2.save()
 
 

@@ -3,5 +3,7 @@ from project_1 import views
 
 
 urlpatterns = [
-    path('', views.home)
+    path('del', views.film_delete),
+    path('', views.home),
+
 ]
