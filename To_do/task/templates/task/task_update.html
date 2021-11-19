@@ -1,10 +1,18 @@
-{% load static %}
+{% extends 'task/base.html' %}
 {% block content %}
 
 <div class="center-column">
 		<h3>Update Task</h3>
 		<form method="POST" >
-		<!-- here should be the form don't forget about csrf_token -->
+		    {% csrf_token %}
+
+            {{ form.name }}
+            {{ form.name.errors }}
+            {{ form.name.label }}
+            {{ form.description }}
+            {{ form.status }}
+
+
 		<input class="btn btn-info" type="submit" name="Update Task">
 	</form>
 </div>

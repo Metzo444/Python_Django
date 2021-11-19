@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
-from task.models import Task
+
 from task.forms import TaskForm
+from task.models import Task
+
 
 def home(request):
     tasks = Task.objects.all().order_by('-created_at')
@@ -11,6 +13,7 @@ def home(request):
     # return HttpResponse("Hello {}".format(tasks[0]))
     return render(request, "task/home.html", context=context)
 
+
 def task_delete(request, task_id):
     try:
         task = Task.objects.get(id=task_id)
@@ -18,6 +21,21 @@ def task_delete(request, task_id):
         return redirect("home")
     task.delete()
     return redirect("home")
+
+
+def task_update(request, task_id):
+    update_form = TaskForm()
+    if request.method == 'POST':
+        update_form = TaskForm(request.POST)
+        if update_form.is_valid():
+
+            Task.objects.update(**update_form.cleaned_data)
+
+            return redirect('home')
+
+    context = {'form': update_form}
+
+    return render(request, "task/task_update.html", context=context)
 
 
 def task_create(request):
@@ -64,6 +82,3 @@ def create_task(request):
         Task.objects.create(name=name, description=description)
         print(Task.objects.all())
         return render(request, "task/index.html")
-
-def task_update(request, task_id):
-    return render(request, "task/task_update.html")

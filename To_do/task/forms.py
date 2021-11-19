@@ -12,12 +12,10 @@ class TaskForm(forms.Form):
 
     def clean_name(self):
         name = self.cleaned_data['name']
-        if not name.isalpha():
-            raise ValidationError('Name should contain only letters!!')
 
-
-        task= Task.objects.filter(name=name)
+        task = Task.objects.filter(name=name)
         if task:
             raise ValidationError('Task with this Name already excist!!')
 
         return name
+
