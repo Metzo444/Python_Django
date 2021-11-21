@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 
-from task.forms import TaskForm
+from task.forms import TaskForm, TaskUpdateForm, TaskModelForm
 from task.models import Task
 
 
@@ -24,34 +24,66 @@ def task_delete(request, task_id):
 
 
 def task_update(request, task_id):
-    update_form = TaskForm()
-    if request.method == 'POST':
-        update_form = TaskForm(request.POST)
-        if update_form.is_valid():
+    try:
+        task = Task.objects.get(id=task_id)
+    except Task.DoesNotExist:
+        return redirect('home')
 
-            Task.objects.update(**update_form.cleaned_data)
+    form = TaskUpdateForm(instance=task)
 
+    if request.method == "POST":
+        form = TaskUpdateForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
             return redirect('home')
 
-    context = {'form': update_form}
+    context = {
+        'task': task,
+        'form': form
+    }
 
     return render(request, "task/task_update.html", context=context)
 
 
+# def task_update(request, task_id):
+#     try:
+#         task = Task.objects.get(id=task_id)
+#     except Task.DoesNotExist:
+#         return redirect("home")
+#
+#
+#     data = dict(description=task.description, status = task.status)
+#
+#     form = TaskUpdateForm(data)
+#
+#     if request.method  == 'POST':
+#         form = TaskUpdateForm(request.POST)
+#         if form.is_valid():
+#             task.status = form.cleaned_data['status']
+#             task.description = form.cleaned_data['description']
+#             task.save()
+#             return redirect('home')
+#     context = {
+#         'task': task,
+#         'form': form
+#     }
+#
+#     return render(request, 'task/task_update.html', context=context)
+
+
 def task_create(request):
-    create_form = TaskForm()
+    create_form = TaskModelForm()
 
     if request.method == 'POST':
-        print(request.POST)
-        create_form = TaskForm(request.POST)
+        create_form = TaskModelForm(request.POST)
         if create_form.is_valid():
             # Task.objects.create(**create_form.cleaned_data)
-            print(create_form.cleaned_data)
-            name = create_form.cleaned_data['name']
-            description = create_form.cleaned_data['description']
-            status = create_form.cleaned_data['status']
-            Task.objects.create(name=name, description=description, status=status)
-
+            # print(create_form.cleaned_data)
+            # name = create_form.cleaned_data['name']
+            # description = create_form.cleaned_data['description']
+            # status = create_form.cleaned_data['status']
+            # Task.objects.create(name=name, description=description, status=status)
+            create_form.save()
             return redirect('home')
 
     context = {

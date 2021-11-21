@@ -3,15 +3,10 @@
 
 <div class="center-column">
 		<h3>Update Task</h3>
+        <h4>{{ task.name }}</h4>
 		<form method="POST" >
 		    {% csrf_token %}
-
-            {{ form.name }}
-            {{ form.name.errors }}
-            {{ form.name.label }}
-            {{ form.description }}
-            {{ form.status }}
-
+            {{form}}
 
 		<input class="btn btn-info" type="submit" name="Update Task">
 	</form>

@@ -19,3 +19,14 @@ class TaskForm(forms.Form):
 
         return name
 
+
+class TaskUpdateForm(forms.Form):
+   class Meta:
+       model =Task
+       # fields = ('description', 'status')
+       exclude = ('name',)
+
+class TaskModelForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = '__all__'
